@@ -9,11 +9,14 @@ from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 st.set_page_config(page_title="Plant Disease Recognition", layout="centered")
 
 # -----------------------------
-# Load model
+# Paths (FIXED)
 # -----------------------------
 MODEL_PATH = "plant_disease_mobilenetV2_model.keras"
 CLASS_PATH = "class_names.json"
 
+# -----------------------------
+# Load model & classes
+# -----------------------------
 @st.cache_resource
 def load_model():
     return tf.keras.models.load_model(MODEL_PATH)
@@ -35,32 +38,33 @@ else:
 # Prediction function
 # -----------------------------
 def model_prediction(image_file):
-    if model is None:
-        st.error("Model is not loaded!")
-        return None
-
     image = Image.open(image_file).convert("RGB")
     image = image.resize((224, 224))
 
     img_array = tf.keras.preprocessing.image.img_to_array(image)
     img_array = np.expand_dims(img_array, axis=0)
-    img_array = preprocess_input(img_array)  # ✅ IMPORTANT
+    img_array = preprocess_input(img_array)
 
-    prediction = model.predict(img_array)
-    return np.argmax(prediction)
+    predictions = model.predict(img_array)
+    index = np.argmax(predictions)
+    confidence = float(np.max(predictions))
 
+    return class_names[index], confidence
 
 # -----------------------------
 # UI
 # -----------------------------
 st.title("🌿 Plant Disease Recognition")
 
-uploaded_file = st.file_uploader("Upload a plant leaf image", type=["jpg", "png", "jpeg"])
+uploaded_file = st.file_uploader(
+    "Upload a plant leaf image",
+    type=["jpg", "png", "jpeg"]
+)
 
 if uploaded_file:
     st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
 
-    label, conf = predict_image(uploaded_file)
+    label, conf = model_prediction(uploaded_file)
 
     st.subheader("Prediction")
     st.write(f"**Disease:** {label}")
