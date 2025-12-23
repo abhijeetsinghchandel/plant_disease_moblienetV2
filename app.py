@@ -11,7 +11,7 @@ st.set_page_config(page_title="Plant Disease Recognition", layout="centered")
 # -----------------------------
 # Load model
 # -----------------------------
-MODEL_PATH = "plant_disease_moblienetV2_model.keras"
+MODEL_PATH = "plant_disease_moblienetV2.keras"
 CLASS_PATH = "class_names.json"
 
 @st.cache_resource
