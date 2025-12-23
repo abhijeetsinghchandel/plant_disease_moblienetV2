@@ -12,7 +12,7 @@ st.set_page_config(page_title="Plant Disease Recognition", layout="centered")
 # Load model
 # -----------------------------
 MODEL_PATH = "plant_disease_mobilenetV2_model.keras"
-CLASS_PATH = "training_history.json"
+CLASS_PATH = "class_names.json"
 
 @st.cache_resource
 def load_model():
