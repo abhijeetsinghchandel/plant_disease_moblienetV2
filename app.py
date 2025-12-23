@@ -34,19 +34,21 @@ else:
 # -----------------------------
 # Prediction function
 # -----------------------------
-def predict_image(image_file):
+def model_prediction(image_file):
+    if model is None:
+        st.error("Model is not loaded!")
+        return None
+
     image = Image.open(image_file).convert("RGB")
     image = image.resize((224, 224))
 
     img_array = tf.keras.preprocessing.image.img_to_array(image)
     img_array = np.expand_dims(img_array, axis=0)
-    img_array = preprocess_input(img_array)  # 🔥 VERY IMPORTANT
+    img_array = preprocess_input(img_array)  # ✅ IMPORTANT
 
-    preds = model.predict(img_array)
-    index = np.argmax(preds)
-    confidence = np.max(preds)
+    prediction = model.predict(img_array)
+    return np.argmax(prediction)
 
-    return class_names[index], confidence
 
 # -----------------------------
 # UI
