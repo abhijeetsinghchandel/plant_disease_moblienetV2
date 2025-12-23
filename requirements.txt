@@ -1,9 +1,8 @@
 streamlit==1.32.2
-tensorflow==2.13.1S
+tensorflow==2.13.1
 numpy
-pandas
+pillow
+opencv-python-headless
+scikit-learn
 matplotlib
 seaborn
-pillow
-scikit-learn
-kagglehub
