@@ -6,4 +6,4 @@ opencv-python-headless
 scikit-learn
 matplotlib
 seaborn
-protobuf<5
+
