@@ -1,6 +1,7 @@
-streamlit==1.52.2
-tensorflow==2.15.1
-numpy<2
+streamlit==1.32.2
+tensorflow==2.20.0
+keras==3.5.0
+numpy
 pillow
 opencv-python-headless
 scikit-learn
